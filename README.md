@@ -100,10 +100,3 @@ npm run dev
 
 ---
 
-### Why this README helps you:
-
-1.  **Visual Impact:** The Mermaid diagram will now render as a graphic (like the one below), showing you understand system flow.
-2.  **Professionalism:** Using the "Roadmap" and "Security Stack" sections shows you think about long-term engineering, not just finishing a task.
-
-
-**Would you like me to help you create that `security.util.ts` file now? It will give you the actual "AES-256" logic to back up the claims in this README.**
