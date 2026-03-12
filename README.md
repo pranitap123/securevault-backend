@@ -54,6 +54,7 @@ Security Stack:
 
 - Rate Limiting: Protects against Brute-Force and DoS attacks on sensitive endpoints.
 
+## Project Structure
 ```
 src/
 ├── controllers/    # Express request/response handling
