@@ -30,7 +30,7 @@ graph TD
     end
 
     %% Styling
-    style User fill:#f9f,stroke:#333,stroke-width:2px
+    style User fill:#1e40af,stroke:#fff,stroke-width:2px,color:#fff
     style DB fill:#00758f,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
