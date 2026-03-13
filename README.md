@@ -30,8 +30,8 @@ graph TD
     end
 
     %% Styling
-    style User fill:#1e40af,stroke:#fff,stroke-width:2px,color:#fff
-    style DB fill:#00758f,stroke:#fff,stroke-width:2px,color:#fff
+    classDef blueNode fill:#1e40af,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef tealNode fill:#00758f,stroke:#fff,stroke-width:2px,color:#fff;
 ```
 
  Key Architectural Pillars:
