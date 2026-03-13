@@ -29,9 +29,9 @@ graph TD
         Models --> DB[(PostgreSQL)]
     end
 
-    %% Styling
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style DB fill:#00758f,stroke:#fff,stroke-width:2px,color:#fff
+    %% Apply Styles Directly
+    style User fill:#2563eb,stroke:#fff,stroke-width:2px,color:#fff
+    style DB fill:#0d9488,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
  Key Architectural Pillars:
