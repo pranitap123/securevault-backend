@@ -40,5 +40,10 @@ export const userSchema = z.object({
 
 });
 
+export const loginSchema = z.object({
+      email: z.string().email("Invalid email format"),
+      password: z.string().min(1,"Password is required"),
+});
 
+export type LoginInput = z.infer<typeof loginSchema>;
 export type IUser = z.infer<typeof userSchema>;
