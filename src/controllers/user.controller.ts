@@ -41,6 +41,16 @@ export const loginUser = async (req: Request, res: Response) => {
 
         const { email, password } = validatedData;
 
+        const storedHashedPassword = "$2a$10$YourStoredHashFromDB...";
+
+        const isMatch = await bcrypt.compare(password, storedHashedPassword);
+
+        if(!isMatch){
+          return res.status(401).json({ message: "Invalid credentials "});
+        }
+
+        res.status(200).json({ message: "Login successful" });
+
     if (email === "pranita@example.com" && password === "SecurePassword123") {
       return res.status(200).json({
         success: true,
