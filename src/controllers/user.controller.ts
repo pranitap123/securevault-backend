@@ -1,10 +1,18 @@
 import { Request, Response } from "express";
 import { IUser } from "../models/user.model";
 import { loginSchema } from "../models/user.model";
+import bcrypt from "bcryptjs";
 
 export const registerUser = async (req: Request, res: Response) => {
     try{
         const { fullName, email, password, role } : IUser = req.body;
+
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+
+        console.log("Password to save: ", hashPassword);
+
+        res.status(201).json({ message: "User registered securely" });
 
         console.log(`Creating user: ${fullName} with email: ${email}`);
 
