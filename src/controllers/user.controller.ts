@@ -1,63 +1,44 @@
 import { Request, Response } from "express";
-import { IUser } from "../models/user.model";
-import { loginSchema } from "../models/user.model";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
+import { prisma } from "../config/db";
 
 export const registerUser = async (req: Request, res: Response) => {
-    try {
-        const { fullName, email, password, role }: IUser = req.body;
+  try {
+    const { email, password, fullName } = req.body;
 
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password, salt);
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
 
-        console.log("Password to save: ", hashPassword);
-        console.log(`Creating user: ${fullName} with email: ${email}`);
-
-        return res.status(201).json({
-            status: "success",
-            message: "User registered successfully",
-            data: {
-                user: {
-                    fullName,
-                    email,
-                    role,
-                },
-            },
-        });
-    } catch (error) {
-        return res.status(500).json({
-            status: "error",
-            message: "An unexpected error occurred during registration",
-        });
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists.",
+      });
     }
-};
 
-export const loginUser = async (req: Request, res: Response) => {
-    try {
-        const validatedData = loginSchema.parse(req.body);
-        const { email, password } = validatedData;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-        const storedHashedPassword = "$2b$10$ArshUMG5TFkNHff1Cyg5vetTzQVxgHRtqs3NxnNAk37TLVLfcUWoO";
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        fullName,
+      },
+    });
 
-        const isMatch = await bcrypt.compare(password, storedHashedPassword);
+    return res.status(201).json({
+      message: "Registration successful",
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+      },
+    });
 
-        if (!isMatch) {
-            return res.status(401).json({ 
-                success: false,
-                message: "Invalid email or password" 
-            });
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: "Login successful! Welcome back.",
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
-        });
-
-    } catch (error: any) {
-        return res.status(400).json({
-            success: false,
-            errors: error.errors || "Authentication failed",
-        });
-    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
 };
