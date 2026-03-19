@@ -20,7 +20,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     return res.status(403).json({ message: "Forbidden: Invalid or expired token" });
   }
 
-  // Attach user ID to the request object for use in controllers
+  
   (req as any).user = decoded; 
   next();
 };
