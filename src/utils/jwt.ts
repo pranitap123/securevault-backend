@@ -1,7 +1,11 @@
 import jwt from 'jsonwebtoken';
 
-const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'access_secret_123';
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh_secret_456';
+const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET!;
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;
+
+interface TokenPayload {
+  id: string;
+}
 
 export const generateTokens = (userId: string) => {
   const accessToken = jwt.sign({ id: userId }, ACCESS_SECRET, {
@@ -15,10 +19,18 @@ export const generateTokens = (userId: string) => {
   return { accessToken, refreshToken };
 };
 
-export const verifyAccessToken = (token: string) => {
-  return jwt.verify(token, ACCESS_SECRET);
+export const verifyAccessToken = (token: string): TokenPayload | null => {
+  try {
+    return jwt.verify(token, ACCESS_SECRET) as TokenPayload;
+  } catch (error) {
+    return null; 
+  }
 };
 
-export const verifyRefreshToken = (token: string) => {
-  return jwt.verify(token, REFRESH_SECRET);
+export const verifyRefreshToken = (token: string): TokenPayload | null => {
+  try {
+    return jwt.verify(token, REFRESH_SECRET) as TokenPayload;
+  } catch (error) {
+    return null;
+  }
 };
