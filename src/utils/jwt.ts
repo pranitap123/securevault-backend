@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET;
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
+const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const REFRESH_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 if (!ACCESS_SECRET || !REFRESH_SECRET) {
-  console.warn("⚠️ WARNING: JWT Secrets are not defined in .env. Using insecure fallbacks.");
+  console.warn("WARNING: JWT Secrets are not defined in .env. Using insecure fallbacks.");
 }
 
 interface TokenPayload {
