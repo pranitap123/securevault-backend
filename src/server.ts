@@ -1,23 +1,13 @@
-import dotenv from 'dotenv';
-dotenv.config(); 
+import app from "./app";
+import dotenv from "dotenv";
 
-import app from './app';
-import { prisma } from './config/db';
+dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-const startServer = async () => {
-  try {
-    await prisma.$connect();
-    console.log("Database connected successfully");
-    
-    app.listen(PORT, () => {
-      console.log(`✅ Server is running on http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error(" Failed to start server:", error);
-    process.exit(1);
-  }
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`-----------------------------------------`);
+  console.log(`SecureVault API is running!`);
+  console.log(`URL: http://localhost:${PORT}`);
+  console.log(`-----------------------------------------`);
+});
