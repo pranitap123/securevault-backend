@@ -1,18 +1,10 @@
 import { Router } from "express";
-import { 
-  registerUser, 
-  loginUser, 
-  refreshToken, 
-  getProfile 
-} from "../controllers/user.controller";
-import { authMiddleware } from "../middleware/auth.middleware";
+import { registerUser } from "../controllers/user.controller";
+import { validate } from "../middleware/validate.middleware";
+import { userSchema } from "../models/user.model";
 
 const router = Router();
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.post("/refresh", refreshToken);
-
-router.get("/me", authMiddleware, getProfile);
+router.post("/register", validate(userSchema), registerUser);
 
 export default router;
